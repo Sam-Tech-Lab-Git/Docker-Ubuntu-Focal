@@ -96,8 +96,8 @@ jobs:
         run: |
           cosign sign --yes samtechrepo/focal:amd64-latest
           cosign sign --yes samtechrepo/focal:amd64-${{ steps.version.outputs.tag }}
-          cosign sign --yes ghcr.io/${{ github.repository_owner }}/focal:amd64-latest
-          cosign sign --yes ghcr.io/${{ github.repository_owner }}/focal:amd64-${{ steps.version.outputs.tag }}
+          cosign sign --yes ghcr.io/sam-tech-lab-git/focal:amd64-latest
+          cosign sign --yes ghcr.io/sam-tech-lab-git/focal:amd64-${{ steps.version.outputs.tag }}
 
       # Vérification automatique post-signature
       - name: Verify signatures
