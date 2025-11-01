@@ -123,10 +123,10 @@ RUN set -eux && \
         jq \
         netcat-openbsd \
         systemd \
-        gcc
-        make
-        git
-        libc6-dev
+        gcc \
+        make \
+        git \
+        libc6-dev \
         tzdata && \
     git clone https://github.com/openSUSE/catatonit.git /tmp/catatonit && \
     cd /tmp/catatonit && make && make install && \
