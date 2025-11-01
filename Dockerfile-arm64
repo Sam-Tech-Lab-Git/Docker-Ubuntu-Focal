@@ -127,9 +127,8 @@ RUN set -eux && \
         make \
         git \
         libc6-dev \
+        catatonit \
         tzdata && \
-    git clone https://github.com/openSUSE/catatonit.git /tmp/catatonit && \
-    cd /tmp/catatonit && make && make install && \
     rm -rf /tmp/catatonit && \
     echo "**** générer les paramètres régionaux ****" && \
     locale-gen en_US.UTF-8
