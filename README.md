@@ -111,6 +111,7 @@ Conçue pour être **sécurisée, rapide et multi-usage**, elle inclut des optim
 ## Sources du Dockerfile
 
 - **Dockerfile amd64** : [GitHub – Sam-Tech-Lab-Git/Docker-Ubuntu-Focal/Dockerfile-amd64](https://github.com/Sam-Tech-Lab-Git/Docker-Ubuntu-Focal/blob/main/Dockerfile-amd64)
+- **Dockerfile arm64** : [GitHub – Sam-Tech-Lab-Git/Docker-Ubuntu-Focal/Dockerfile-arm64](https://github.com/Sam-Tech-Lab-Git/Docker-Ubuntu-Focal/blob/main/Dockerfile-arm64)
 
 ---
 
@@ -143,7 +144,7 @@ docker run -d -p 8080:80 my-nginx
 ```
 
 ### 3. Exemple avec Docker Compose
-Créez un fichier nommé docker-compose.yml :
+Créer un fichier nommé docker-compose.yml :
 
 ```yaml
 services:
@@ -167,7 +168,7 @@ services:
       "
 ```
 
-Puis lancez le conteneur :
+Puis lancer le conteneur :
 
 ```bash
 docker compose up -d
@@ -175,7 +176,7 @@ docker compose up -d
 
 Cela télécharge automatiquement l’image Ubuntu optimisée Sam Tech Lab, installe Nginx, et démarre le serveur web sur http://localhost:8080.
 
-Arrêtez le conteneur :
+Arrêter le conteneur :
 
 ```bash
 docker compose down
