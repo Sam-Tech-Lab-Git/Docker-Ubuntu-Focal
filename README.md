@@ -107,7 +107,7 @@ Conçue pour être **sécurisée, rapide et multi-usage**, elle inclut des optim
 
 ## Sources du Dockerfile
 
-- **Dockerfile amd64** : [GitHub – Sam-Tech-Lab-Git/Docker-Ubuntu](https://github.com/Sam-Tech-Lab-Git/Docker-Ubuntu-Focal/blob/main/Dockerfile-amd64)
+- **Dockerfile amd64** : [GitHub – Sam-Tech-Lab-Git/Docker-Ubuntu-Focal/Dockerfile-amd64](https://github.com/Sam-Tech-Lab-Git/Docker-Ubuntu-Focal/blob/main/Dockerfile-amd64)
 
 ---
 
@@ -116,20 +116,20 @@ Conçue pour être **sécurisée, rapide et multi-usage**, elle inclut des optim
 ### 1. Lancer un conteneur interactif
 
 ```bash
-docker run -it --rm samtechrepo/focal:amd64-latest /bin/bash
+docker run -it --rm ghcr.io/sam-tech-lab-git/focal:amd64-latest /bin/bash
 ```
 
 ### 2. Dockerfile simple
 
 ```dockerfile
-FROM samtechrepo/focal:amd64-latest
+FROM ghcr.io/sam-tech-lab-git/focal:amd64-latest
 
 RUN apt update && apt install -y nginx
 
 CMD ["nginx", "-g", "daemon off;"]
 ```
 
-Ce Dockerfile crée une image personnalisée basée sur samtechrepo/focal:amd64-latest, avec NGINX préinstallé.
+Ce Dockerfile crée une image personnalisée basée sur ghcr.io/sam-tech-lab-git/focal:amd64-latest, avec NGINX préinstallé.
 
 Vous pouvez ensuite la construire et la tester localement :
 
@@ -145,7 +145,7 @@ Créez un fichier nommé docker-compose.yml :
 ```yaml
 services:
   web:
-    image: samtechrepo/focal:amd64-latest
+    image: ghcr.io/sam-tech-lab-git/focal:amd64-latest
     container_name: nginx-web
     restart: unless-stopped
     ports:
