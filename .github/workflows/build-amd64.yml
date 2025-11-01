@@ -1,4 +1,4 @@
-name: Build & Push — AMD64
+name: Build & Push — AMD64 (Signed)
 
 on:
   push:
@@ -10,6 +10,10 @@ on:
 jobs:
   build-amd64:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      id-token: write # requis pour la signature cosign
 
     steps:
       - name: Checkout
@@ -31,6 +35,7 @@ jobs:
           echo "tag=${TAG}" >> $GITHUB_OUTPUT
 
       - name: Build and push (AMD64)
+        id: build
         uses: docker/build-push-action@v6
         with:
           context: .
@@ -42,12 +47,30 @@ jobs:
             samtechrepo/focal:amd64-${{ steps.version.outputs.tag }}
           labels: |
             maintainer="Sam Tech Lab"
-            org.opencontainers.image.title="Ubuntu Focal base" 
-            org.opencontainers.image.description="Base Ubuntu 20.04, légère et sécurisée"
+            org.opencontainers.image.title="Ubuntu Focal Base"
             org.opencontainers.image.version="20.04"
-            org.opencontainers.image.architecture=amd64
+            org.opencontainers.image.description="Ubuntu Focal base image (AMD64) — légère, sécurisée et maintenue par Sam Tech Lab"
             org.opencontainers.image.authors="Sam Tech Lab"
             org.opencontainers.image.licenses="MIT"
+            org.opencontainers.image.architecture=amd64
             org.opencontainers.image.source=${{ github.repository }}
-            org.opencontainers.image.description=Ubuntu base image (AMD64)
-            org.opencontainers.image.licenses=MIT
+            org.opencontainers.image.vendor="Sam Tech Lab"
+            org.opencontainers.image.url="https://hub.docker.com/r/samtechrepo/focal"
+
+      # Installation de Cosign (signataire d'image)
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@v3
+
+      # Signature des images via identité GitHub OIDC (aucune clé à gérer)
+      - name: Sign Docker image (Cosign Keyless)
+        env:
+          COSIGN_EXPERIMENTAL: "true"
+        run: |
+          cosign sign --yes samtechrepo/focal:amd64-latest
+          cosign sign --yes samtechrepo/focal:amd64-${{ steps.version.outputs.tag }}
+
+      # Vérification automatique après signature
+      - name: Verify signature
+        run: |
+          cosign verify samtechrepo/focal:amd64-latest \
+            | grep "Verified OK" && echo "✅ Image signée avec succès !"
