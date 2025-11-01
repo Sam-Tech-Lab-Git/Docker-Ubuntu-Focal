@@ -40,6 +40,150 @@
 
 ---
 
+## Overview
+
+This image provides a **clean, stable, and minimal Ubuntu base** to build production-ready Docker containers.  
+It is built **from scratch** using the **official Ubuntu OCI rootfs**, ensuring **authenticity**, **lightness**, and **reproducibility**.
+
+> **Automatic monthly updates**:  
+> The image is rebuilt every month with the latest Ubuntu updates and security patches.
+
+Designed to be **secure, fast, and multi-purpose**, it includes advanced APT optimizations, a non-root user, and a reliable init process (`catatonit`) for maximum compatibility.
+
+---
+
+## Key Features
+
+- ✅ **“FROM scratch” image** — minimal size with optimized multi-stage builds  
+- ✅ **Based on the official Ubuntu OCI rootfs**  
+- ✅ **APT & dpkg optimization** — no recommended packages, clean cache  
+- ✅ **Automatic service blocking** (`systemd`, `upstart`)  
+- ✅ **Non-root user (`appuser`)** for safer container execution  
+- ✅ **Full cleanup** of `/tmp`, `/var/log`, `/var/lib/apt/lists`  
+- ✅ **Locale & timezone configured** (`en_US.UTF-8`, `UTC`)  
+- ✅ **Init process: `catatonit` (PID 1)**  
+- ✅ **System hardening**:
+  - Root account locked  
+  - Unnecessary SUID/SGID bits removed  
+  - Default `umask 027`  
+- ✅ **PUID/PGID variables** for easy permission mapping  
+- ✅ **Automated monthly rebuilds**  
+- ✅ **Regular security patches**
+
+---
+
+## Included Packages
+
+| Category | Packages |
+|-----------|-----------|
+| System base | `bash`, `cron`, `curl`, `gnupg`, `jq`, `netcat-openbsd`, `tzdata` |
+| System tools | `systemd-standalone-sysusers`, `apt-utils`, `locales` |
+| Init | `catatonit` (PID 1) |
+
+---
+
+## Environment Variables
+
+| Variable | Default value | Description |
+|-----------|----------------|--------------|
+| `PUID` | `999` | Non-root user ID |
+| `PGID` | `999` | Non-root group ID |
+| `HOME` | `/config` | Home directory |
+| `LANG` | `en_US.UTF-8` | Default locale |
+| `TZ` | `UTC` | Timezone |
+| `DEBIAN_FRONTEND` | `noninteractive` | Disables interactive APT prompts |
+
+---
+
+## Base Specifications
+
+| Field | Value |
+|--------|--------|
+| OS | Ubuntu |
+| Architectures | amd64, arm64 |
+| Source | Ubuntu OCI RootFS |
+| Maintainer | Sam Tech Lab |
+| License | MIT |
+| Update frequency | Monthly (automated) |
+
+---
+
+## Dockerfile Sources
+
+- **Dockerfile amd64**: [GitHub – Sam-Tech-Lab-Git/Docker-Ubuntu-Focal/Dockerfile-amd64](https://github.com/Sam-Tech-Lab-Git/Docker-Ubuntu-Focal/blob/main/Dockerfile-amd64)
+- **Dockerfile arm64**: [GitHub – Sam-Tech-Lab-Git/Docker-Ubuntu-Focal/Dockerfile-arm64](https://github.com/Sam-Tech-Lab-Git/Docker-Ubuntu-Focal/blob/main/Dockerfile-arm64)
+
+---
+
+## Usage Examples
+
+### 1. Run an interactive container
+
+```bash
+docker run -it --rm ghcr.io/sam-tech-lab-git/focal:amd64-latest /bin/bash
+```
+
+### 2. Simple Dockerfile
+
+```dockerfile
+FROM ghcr.io/sam-tech-lab-git/focal:amd64-latest
+
+RUN apt update && apt install -y nginx
+
+CMD ["nginx", "-g", "daemon off;"]
+```
+
+This Dockerfile creates a custom image based on ghcr.io/sam-tech-lab-git/focal:amd64-latest with NGINX preinstalled.
+
+You can then build and test it locally:
+
+```bash
+docker build -t my-nginx .
+
+docker run -d -p 8080:80 my-nginx
+```
+
+### 3. Example with Docker Compose
+Create a file named docker-compose.yml:
+
+```yaml
+services:
+  web:
+    image: ghcr.io/sam-tech-lab-git/focal:amd64-latest
+    container_name: nginx-web
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ./html:/var/www/html
+    environment:
+      TZ: "Europe/Paris"
+      PUID: 1000
+      PGID: 1000
+    command: >
+      bash -c "
+      apt update &&
+      apt install -y nginx &&
+      nginx -g 'daemon off;'
+      "
+```
+
+Then start the container :
+
+```bash
+docker compose up -d
+```
+
+This automatically pulls the optimized Ubuntu image from Sam Tech Lab, installs NGINX, and launches the web server at http://localhost:8080.
+
+To stop the container :
+
+```bash
+docker compose down
+```
+
+---
+
 ## Présentation
 
 Cette image fournit une **base Ubuntu propre, stable et minimaliste** pour construire des conteneurs Docker de production.  
