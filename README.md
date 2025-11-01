@@ -25,13 +25,13 @@
     <img src="https://img.shields.io/docker/stars/samtechrepo/focal.svg?style=for-the-badge&logo=docker&logoColor=white" alt="Docker Stars"/>
   </a>
   <a href="https://github.com/Sam-Tech-Lab-Git" target="_blank">
-    <img src="https://img.shields.io/static/v1?label=LabSamTech&message=GitHub&color=94398d&labelColor=555555&style=for-the-badge&logo=github&logoColor=white" alt="GitHub"/>
+    <img src="https://img.shields.io/static/v1?label=SamTechLab&message=GitHub&color=94398d&labelColor=555555&style=for-the-badge&logo=github&logoColor=white" alt="GitHub"/>
   </a>
   <a href="https://github.com/Sam-Tech-Lab-Git/Docker-Ubuntu-Focal/blob/main/LICENSE" target="_blank">
     <img src="https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge" alt="License: MIT"/>
   </a>
-  <a href="https://github.com/Sam-Tech-Lab-Git/Docker-Ubuntu/actions/workflows/build-monthly.yml" target="_blank">
-      <img src="https://github.com/Sam-Tech-Lab-Git/Docker-Ubuntu/actions/workflows/build-monthly.yml/badge.svg" alt="Build — Monthly"/>
+  <a href="https://github.com/Sam-Tech-Lab-Git/Docker-Ubuntu-Focal/actions/workflows/build-amd64.yml" target="_blank">
+      <img src="https://github.com/Sam-Tech-Lab-Git/Docker-Ubuntu-Focal/actions/workflows/build-amd64.yml/badge.svg" alt="Build amd64 — Monthly"/>
   </a>
 </p>
 
@@ -97,7 +97,7 @@ Conçue pour être **sécurisée, rapide et multi-usage**, elle inclut des optim
 | Champ | Valeur |
 |--------|--------|
 | Système | Ubuntu |
-| Architecture | amd64 |
+| Architecture | amd64, arm64 |
 | Source | Ubuntu OCI RootFS |
 | Mainteneur | Sam Tech Lab |
 | Licence | MIT |
@@ -105,9 +105,9 @@ Conçue pour être **sécurisée, rapide et multi-usage**, elle inclut des optim
 
 ---
 
-## Source du Dockerfile
+## Sources du Dockerfile
 
-- **Dockerfile principal** : [GitHub – Sam-Tech-Lab-Git/Docker-Ubuntu](https://github.com/Sam-Tech-Lab-Git/Docker-Ubuntu-Focal/blob/main/Dockerfile)
+- **Dockerfile amd64** : [GitHub – Sam-Tech-Lab-Git/Docker-Ubuntu](https://github.com/Sam-Tech-Lab-Git/Docker-Ubuntu-Focal/blob/main/Dockerfile-amd64)
 
 ---
 
