@@ -103,4 +103,4 @@ jobs:
       - name: Verify signatures
         run: |
           cosign verify samtechrepo/focal:amd64-latest | grep "Verified OK"
-          cosign verify ghcr.io/${{ github.repository_owner }}/focal:amd64-latest | grep "Verified OK"
+          cosign verify ghcr.io/sam-tech-lab-git/focal:amd64-latest | grep "Verified OK"
