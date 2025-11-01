@@ -72,8 +72,8 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/focal:amd64-latest
-            ghcr.io/${{ github.repository_owner }}/focal:amd64-${{ steps.version.outputs.tag }}
+            ghcr.io/sam-tech-lab-git/focal:amd64-latest
+            ghcr.io/sam-tech-lab-git/focal:amd64-${{ steps.version.outputs.tag }}
           labels: |
             maintainer="Sam Tech Lab"
             org.opencontainers.image.title="Ubuntu Focal Base"
