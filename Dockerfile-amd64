@@ -42,6 +42,7 @@ LABEL maintainer="Sam Tech Lab" \
       org.opencontainers.image.title="Ubuntu Focal base" \
       org.opencontainers.image.description="Base Ubuntu 20.04, légère et sécurisée" \
       org.opencontainers.image.version="20.04" \
+      org.opencontainers.image.architecture=amd64 \
       org.opencontainers.image.authors="Sam Tech Lab" \
       org.opencontainers.image.licenses="MIT" \
       org.opencontainers.image.source="https://github.com/Sam-Tech-Lab-Git/Docker-Ubuntu-Focal" \
