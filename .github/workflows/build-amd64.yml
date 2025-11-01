@@ -3,6 +3,8 @@ name: Build & Push — amd64
 on:
   push:
     branches: [ main ]
+    paths:
+      - 'Dockerfile-amd64'
   schedule:
     - cron: "0 2 1 * *" # chaque 1er du mois à 02h00 UTC
   workflow_dispatch:
