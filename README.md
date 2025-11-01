@@ -33,6 +33,9 @@
   <a href="https://github.com/Sam-Tech-Lab-Git/Docker-Ubuntu-Focal/actions/workflows/build-amd64.yml" target="_blank">
       <img src="https://github.com/Sam-Tech-Lab-Git/Docker-Ubuntu-Focal/actions/workflows/build-amd64.yml/badge.svg" alt="Build amd64 — Monthly"/>
   </a>
+  <a href="https://github.com/Sam-Tech-Lab-Git/Docker-Ubuntu-Focal/actions/workflows/build-arm64.yml" target="_blank">
+      <img src="https://github.com/Sam-Tech-Lab-Git/Docker-Ubuntu-Focal/actions/workflows/build-arm64.yml/badge.svg" alt="Build arm64 — Monthly"/>
+  </a>
 </p>
 
 ---
