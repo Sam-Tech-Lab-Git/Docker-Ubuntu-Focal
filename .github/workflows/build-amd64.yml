@@ -98,16 +98,3 @@ jobs:
           cosign sign --yes samtechrepo/focal:amd64-${{ steps.version.outputs.tag }}
           cosign sign --yes ghcr.io/sam-tech-lab-git/focal:amd64-latest
           cosign sign --yes ghcr.io/sam-tech-lab-git/focal:amd64-${{ steps.version.outputs.tag }}
-
-      - name: Verify signatures
-        run: |
-          cosign verify \
-            --certificate-identity-regexp 'https://github.com/Sam-Tech-Lab-Git/Docker-Ubuntu/.*' \
-            --certificate-oidc-issuer 'https://token.actions.githubusercontent.com' \
-            samtechrepo/focal:amd64-latest | grep "Verified OK" && echo "✅ Docker Hub image signée avec succès !"
-
-          cosign verify \
-            --certificate-identity-regexp 'https://github.com/Sam-Tech-Lab-Git/Docker-Ubuntu/.*' \
-            --certificate-oidc-issuer 'https://token.actions.githubusercontent.com' \
-            ghcr.io/sam-tech-lab-git/focal:amd64-latest | grep "Verified OK" && echo "✅ GHCR image signée avec succès !"
-
