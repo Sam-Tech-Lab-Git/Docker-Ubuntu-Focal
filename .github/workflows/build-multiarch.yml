@@ -1,0 +1,125 @@
+name: Build & Push — multi-arch (amd64 + arm64)
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'Dockerfile'
+  schedule:
+    - cron: "0 3 1 * *" # chaque 1er du mois à 02h00 UTC
+  workflow_dispatch:
+
+jobs:
+  build-multiarch:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      id-token: write   # Requis pour Cosign keyless
+      packages: write   # Requis pour GHCR
+
+    steps:
+      # Récupérer le dépôt
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Installer QEMU (cross-compilation multi-arch)
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: all
+
+      # Configurer Buildx
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # Login Docker Hub
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # Login GHCR
+      - name: Log in to GitHub Container Registry (GHCR)
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Génération dynamique du tag
+      - name: Compute version tag
+        id: version
+        run: |
+          TAG=$(date -u +'%Y.%m')
+          echo "tag=${TAG}" >> $GITHUB_OUTPUT
+
+      # Build + Push multi-arch vers Docker Hub
+      - name: Build & Push — Docker Hub
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile-multi-arch
+          platforms: linux/amd64,linux/arm64
+          push: true
+          build-args: |
+            BUILD_DATE=${{ github.event.head_commit.timestamp }}
+          tags: |
+            samtechrepo/focal:latest
+            samtechrepo/focal:${{ steps.version.outputs.tag }}
+          labels: |
+            maintainer="Sam Tech Lab"
+            org.opencontainers.image.title="Ubuntu Focal Base"
+            org.opencontainers.image.version="20.04"
+            org.opencontainers.image.description="Ubuntu Focal base image — légère, sécurisée et maintenue par Sam Tech Lab"
+            org.opencontainers.image.authors="Sam Tech Lab"
+            org.opencontainers.image.licenses="MIT"
+            org.opencontainers.image.architecture="multiarch"
+            org.opencontainers.image.source=${{ github.repository }}
+            org.opencontainers.image.vendor="Sam Tech Lab"
+            org.opencontainers.image.url="https://hub.docker.com/r/samtechrepo/focal"
+
+      # Build + Push multi-arch vers GHCR
+      - name: Build & Push — GHCR
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile-multi-arch
+          platforms: linux/amd64,linux/arm64
+          push: true
+          build-args: |
+            BUILD_DATE=${{ github.event.head_commit.timestamp }}
+          tags: |
+            ghcr.io/sam-tech-lab-git/focal:latest
+            ghcr.io/sam-tech-lab-git/focal:${{ steps.version.outputs.tag }}
+          labels: |
+            maintainer="Sam Tech Lab"
+            org.opencontainers.image.title="Ubuntu Focal Base"
+            org.opencontainers.image.version="20.04"
+            org.opencontainers.image.description="Ubuntu Focal base image — légère, sécurisée et maintenue par Sam Tech Lab"
+            org.opencontainers.image.authors="Sam Tech Lab"
+            org.opencontainers.image.licenses="MIT"
+            org.opencontainers.image.architecture="multiarch"
+            org.opencontainers.image.source=${{ github.repository }}
+            org.opencontainers.image.vendor="Sam Tech Lab"
+            org.opencontainers.image.url="https://ghcr.io/${{ github.repository_owner }}/focal"
+
+      # Vérification du manifest multi-arch
+      - name: Inspect manifest
+        run: |
+          docker buildx imagetools inspect samtechrepo/focal:latest
+          docker buildx imagetools inspect ghcr.io/sam-tech-lab-git/focal:latest
+
+      # Signature Cosign keyless
+      # - name: Install Cosign
+      #   uses: sigstore/cosign-installer@v3
+      #
+      # - name: Sign images (Cosign keyless)
+      #   env:
+      #     COSIGN_EXPERIMENTAL: "true"
+      #   run: |
+      #     cosign sign --yes samtechrepo/focal:latest
+      #     cosign sign --yes samtechrepo/focal:${{ steps.version.outputs.tag }}
+      #     cosign sign --yes ghcr.io/sam-tech-lab-git/focal:latest
+      #     cosign sign --yes ghcr.io/sam-tech-lab-git/focal:${{ steps.version.outputs.tag }}
