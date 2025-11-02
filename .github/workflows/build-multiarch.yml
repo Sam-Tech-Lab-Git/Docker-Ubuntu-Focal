@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'Dockerfile'
+      - 'Dockerfile-multi-arch'
   schedule:
     - cron: "0 3 1 * *" # chaque 1er du mois à 02h00 UTC
   workflow_dispatch:
