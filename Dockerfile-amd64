@@ -42,7 +42,7 @@ LABEL maintainer="Sam Tech Lab" \
       org.opencontainers.image.title="Ubuntu Focal base" \
       org.opencontainers.image.description="Base Ubuntu 20.04, légère et sécurisée" \
       org.opencontainers.image.version="20.04" \
-      org.opencontainers.image.architecture=amd64 \
+      org.opencontainers.image.architecture="amd64" \
       org.opencontainers.image.authors="Sam Tech Lab" \
       org.opencontainers.image.licenses="MIT" \
       org.opencontainers.image.source="https://github.com/Sam-Tech-Lab-Git/Docker-Ubuntu-Focal" \
@@ -57,9 +57,6 @@ ENV LANG=en_US.UTF-8 \
     TZ=UTC \
     PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
-# Copier les sources APT
-# COPY sources.list /etc/apt/
-
 # ------------------------------ #
 # Optimisations APT et conteneur #
 # ------------------------------ #
@@ -67,9 +64,6 @@ ENV LANG=en_US.UTF-8 \
 RUN set -eux && \
     echo "**** Optimisation Ubuntu pour Docker ****" && \
     \
-    # Nettoyer les sources inutiles (si présentes)
-    # rm -f /etc/apt/sources.list.d/ubuntu.sources || true && \
-    # \
     # Bloquer le démarrage automatique des services (systemd, etc.)
     echo '#!/bin/sh' > /usr/sbin/policy-rc.d && \
     echo 'exit 101' >> /usr/sbin/policy-rc.d && \
@@ -124,8 +118,6 @@ RUN set -eux && \
         netcat-openbsd \
         systemd \
         tzdata && \
-    curl -o /tmp/catatonit_0.2.1-2_amd64.deb http://archive.ubuntu.com/ubuntu/pool/universe/c/catatonit/catatonit_0.2.1-2_amd64.deb && \
-    apt install /tmp/catatonit_0.2.1-2_amd64.deb && \
     echo "**** générer les paramètres régionaux ****" && \
     locale-gen en_US.UTF-8
 # -------------------------------------------------- #
@@ -169,9 +161,6 @@ USER appuser
 
 # Définir le shell par défaut
 SHELL ["/bin/bash", "-c"]
-
-# Utiliser Catatonit comme init process (PID 1)
-ENTRYPOINT ["catatonit", "--"]
 
 # Commande par défaut
 CMD ["/bin/bash"]
