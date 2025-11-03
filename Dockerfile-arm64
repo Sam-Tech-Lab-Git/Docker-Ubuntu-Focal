@@ -5,7 +5,7 @@
 FROM alpine:latest AS builder
 
 # Variables d'environnement
-ENV REL=noble
+ENV REL=focal
 ENV ARCH=arm64
 ENV TAG=oci-focal-20.04
 
