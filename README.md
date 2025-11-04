@@ -34,6 +34,9 @@
   <a href="https://github.com/Sam-Tech-Lab-Git/Docker-Ubuntu-Focal/actions/workflows/build-arm64.yml" target="_blank">
       <img src="https://github.com/Sam-Tech-Lab-Git/Docker-Ubuntu-Focal/actions/workflows/build-arm64.yml/badge.svg" alt="Build arm64 — Monthly"/>
   </a>
+  <a href="https://github.com/Sam-Tech-Lab-Git/Docker-Ubuntu-Focal/actions/workflows/build-multiarch.yml" target="_blank">
+      <img src="https://github.com/Sam-Tech-Lab-Git/Docker-Ubuntu-Focal/actions/workflows/build-multiarch.yml/badge.svg" alt="Build multiarch — Monthly"/>
+  </a>
 </p>
 
 ---
@@ -108,6 +111,7 @@ Designed to be **secure, fast, and multi-purpose**, it includes advanced APT opt
 
 - **Dockerfile amd64**: [GitHub – Sam-Tech-Lab-Git/Docker-Ubuntu-Focal/Dockerfile-amd64](https://github.com/Sam-Tech-Lab-Git/Docker-Ubuntu-Focal/blob/main/Dockerfile-amd64)
 - **Dockerfile arm64**: [GitHub – Sam-Tech-Lab-Git/Docker-Ubuntu-Focal/Dockerfile-arm64](https://github.com/Sam-Tech-Lab-Git/Docker-Ubuntu-Focal/blob/main/Dockerfile-arm64)
+- **Dockerfile multiarch** : [GitHub – Sam-Tech-Lab-Git/Docker-Ubuntu-Focal/Dockerfile-arm64](https://github.com/Sam-Tech-Lab-Git/Docker-Ubuntu-Focal/blob/main/Dockerfile-multi-arch)
 
 ---
 
@@ -116,20 +120,20 @@ Designed to be **secure, fast, and multi-purpose**, it includes advanced APT opt
 ### 1. Run an interactive container
 
 ```bash
-docker run -it --rm ghcr.io/sam-tech-lab-git/focal:amd64-latest /bin/bash
+docker run -it --rm ghcr.io/sam-tech-lab-git/focal:latest /bin/bash
 ```
 
 ### 2. Simple Dockerfile
 
 ```dockerfile
-FROM ghcr.io/sam-tech-lab-git/focal:amd64-latest
+FROM ghcr.io/sam-tech-lab-git/focal:latest
 
 RUN apt update && apt install -y nginx
 
 CMD ["nginx", "-g", "daemon off;"]
 ```
 
-This Dockerfile creates a custom image based on ghcr.io/sam-tech-lab-git/focal:amd64-latest with NGINX preinstalled.
+This Dockerfile creates a custom image based on ghcr.io/sam-tech-lab-git/focal:latest with NGINX preinstalled.
 
 You can then build and test it locally:
 
@@ -145,7 +149,7 @@ Create a file named docker-compose.yml:
 ```yaml
 services:
   web:
-    image: ghcr.io/sam-tech-lab-git/focal:amd64-latest
+    image: ghcr.io/sam-tech-lab-git/focal:latest
     container_name: nginx-web
     restart: unless-stopped
     ports:
@@ -250,6 +254,7 @@ Conçue pour être sécurisée, rapide et multi-usage, elle inclut des optimisat
 
 - **Dockerfile amd64** : [GitHub – Sam-Tech-Lab-Git/Docker-Ubuntu-Focal/Dockerfile-amd64](https://github.com/Sam-Tech-Lab-Git/Docker-Ubuntu-Focal/blob/main/Dockerfile-amd64)
 - **Dockerfile arm64** : [GitHub – Sam-Tech-Lab-Git/Docker-Ubuntu-Focal/Dockerfile-arm64](https://github.com/Sam-Tech-Lab-Git/Docker-Ubuntu-Focal/blob/main/Dockerfile-arm64)
+- **Dockerfile multiarch** : [GitHub – Sam-Tech-Lab-Git/Docker-Ubuntu-Focal/Dockerfile-arm64](https://github.com/Sam-Tech-Lab-Git/Docker-Ubuntu-Focal/blob/main/Dockerfile-multi-arch)
 
 ---
 
@@ -258,20 +263,20 @@ Conçue pour être sécurisée, rapide et multi-usage, elle inclut des optimisat
 ### 1. Lancer un conteneur interactif
 
 ```bash
-docker run -it --rm ghcr.io/sam-tech-lab-git/focal:amd64-latest /bin/bash
+docker run -it --rm ghcr.io/sam-tech-lab-git/focal:latest /bin/bash
 ```
 
 ### 2. Dockerfile simple
 
 ```dockerfile
-FROM ghcr.io/sam-tech-lab-git/focal:amd64-latest
+FROM ghcr.io/sam-tech-lab-git/focal:latest
 
 RUN apt update && apt install -y nginx
 
 CMD ["nginx", "-g", "daemon off;"]
 ```
 
-Ce Dockerfile crée une image personnalisée basée sur ghcr.io/sam-tech-lab-git/focal:amd64-latest, avec NGINX préinstallé.
+Ce Dockerfile crée une image personnalisée basée sur ghcr.io/sam-tech-lab-git/focal:latest, avec NGINX préinstallé.
 
 Vous pouvez ensuite la construire et la tester localement :
 
@@ -287,7 +292,7 @@ Créer un fichier nommé docker-compose.yml :
 ```yaml
 services:
   web:
-    image: ghcr.io/sam-tech-lab-git/focal:amd64-latest
+    image: ghcr.io/sam-tech-lab-git/focal:latest
     container_name: nginx-web
     restart: unless-stopped
     ports:
@@ -322,13 +327,15 @@ docker compose down
 
 ---
 
-## Licence
+## License / Licence
+
+This project is distributed under the **MIT** license — see the [LICENSE](https://github.com/Sam-Tech-Lab-Git/Docker-Ubuntu-Focal/blob/main/LICENSE) file for more details.
 
 Ce projet est distribué sous la licence **MIT** — consultez le fichier [LICENSE](https://github.com/Sam-Tech-Lab-Git/Docker-Ubuntu-Focal/blob/main/LICENSE) pour plus de détails.
 
 ---
 
-## Droit d’auteur
+## Copyright / Droit d’auteur
 
 ```text
 Copyright (c) 2025 Sam Tech Lab
